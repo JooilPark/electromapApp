@@ -9,6 +9,7 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -32,6 +33,9 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/google_admob_key"/>
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="@string/naver_map_key" />
         <activity
             android:name=".MapsActivity"
             android:exported="true"
