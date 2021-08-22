@@ -4,6 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/MyGit/spring/electromapApp/app/src/main/res/layout/map_naver.xml" value="0.18229166666666666" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/drawable/maker_back_day_activity.xml" value="0.26979166666666665" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/drawable/maker_back_round.xml" value="0.26979166666666665" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/activity_maps.xml" value="0.2462962962962963" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/map_maker.xml" value="0.72" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/map_naver.xml" value="0.25364583333333335" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/map_naver_fragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/view_maker_item_day.xml" value="0.3172638436482085" />
       </map>
     </option>
   </component>

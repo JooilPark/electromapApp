@@ -20,7 +20,7 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDE5e8GjhhJ0j6xwwZH2Mm7fXIfjvQmP9k</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBFXKMoZE9S0f_v7RTh6Sb8kvjulpWNlQQ</string>
     <string name="google_admob_key" templateMergeStrategy="preserve" translatable="false">ca-app-pub-9999663550966576~9217646050</string>
     <string name="naver_map_key" templateMergeStrategy="preserve" translatable="false">obf3q1dwzt</string>
 

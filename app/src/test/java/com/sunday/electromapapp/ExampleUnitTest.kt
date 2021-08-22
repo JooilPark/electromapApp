@@ -1,4 +1,4 @@
-package com.example.electromapapp
+package com.sunday.electromapapp
 
 import org.junit.Test
 

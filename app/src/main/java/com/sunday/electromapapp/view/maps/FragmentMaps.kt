@@ -1,4 +1,4 @@
-package com.example.electromapapp.view.maps
+package com.sunday.electromapapp.view.maps
 
 import androidx.fragment.app.Fragment
 

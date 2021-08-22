@@ -7,4 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="makerborder">#8C8888</color>
+    <color name="maker_day">#219653</color>
+    <color name="defaulttextcolor_FF">#000000</color>
 </resources>
