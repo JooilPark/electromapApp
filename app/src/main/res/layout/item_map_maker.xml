@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="item"
+            type="com.sunday.electromapapp.model.vo.Positioninfo" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -23,7 +31,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/presence_online" />
+                app:srcCompat="@drawable/ischarge_status" />
 
             <TextView
                 android:id="@+id/tv_location_name"
@@ -36,6 +44,7 @@
                 android:maxLines="1"
                 android:textColor="@color/defaulttextcolor_FF"
                 android:textSize="12sp"
+                android:text="@{item.facilityName}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="장애인 전동보장구 충전기(영춘면별방민원센터)" />
@@ -46,6 +55,7 @@
                 android:layout_height="8dp"
                 android:includeFontPadding="false"
                 android:maxLines="1"
+                android:text="@{item.managerFacilityPhone}"
                 android:textColor="@color/defaulttextcolor_FF"
                 android:textSize="7sp"
                 app:layout_constraintStart_toStartOf="@id/tv_location_name"
@@ -62,67 +72,91 @@
                 android:orientation="horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_phone">
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start">
+
                     <include
+                        android:id="@+id/day1"
                         layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isWeek}"
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start">
+
                     <include
+                        android:id="@+id/day2"
                         layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isWeek}"
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start">
+
                     <include
                         layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isWeek}"
+                        android:id="@+id/day3"
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start">
+
                     <include
                         layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isWeek}"
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start">
+
                     <include
                         layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isWeek}"
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start">
+
                     <include
                         layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isSaturday}"
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start">
+
                     <include
                         layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isSunday}"
                         app:layout_constraintStart_toStartOf="parent" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
