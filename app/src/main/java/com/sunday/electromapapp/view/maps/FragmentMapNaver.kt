@@ -58,7 +58,6 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
                         true
                     }
                     tag = positioninfo
-
                     map = naverMap
                 }
             }
