@@ -1,18 +1,28 @@
 package com.sunday.electromapapp.model.net
 
-import android.content.Context
-import okhttp3.OkHttpClient
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
-import javax.inject.Inject
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
 @Singleton
-class RetrofitUtil @Inject constructor(private val context: Context) {
-    private val baseUrl = "http://52.78.33.240:8080"
-    private val retrofit: Retrofit = Retrofit.Builder().baseUrl(baseUrl)
+object RetrofitUtil {
+    //private val baseUrl = "http://52.78.33.240:8080"
+    private val baseUrl = "http://www.ewheelmap.com:8080/"
+    private val gson = GsonBuilder().setLenient().create()
+    private var instance: Retrofit? = null
+    private fun getInstance(): Retrofit {
+        if (instance == null) {
+            instance = Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+        }
+        return instance!!
+    }
 
-        .client(OkHttpClient()).build()
-    fun getApi ()  = retrofit.create(ElectromapApi::class.java)
+    fun getApi(): ElectromapApi = getInstance().create(ElectromapApi::class.java)
+
 
 }
