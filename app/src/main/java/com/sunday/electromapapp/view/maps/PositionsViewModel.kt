@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.sunday.electromapapp.model.net.MapRepository
 import com.sunday.electromapapp.model.vo.Positioninfo
+import com.sunday.electromapapp.model.vo.RequestCurrentPosition
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -47,7 +48,7 @@ class PositionsViewModel @Inject constructor(
              isLoading.postValue(false)
          }*/
 
-        mapReposition.getPositions(37.51408, 127.10440, 10)
+        mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10))
             .onStart { isLoading.postValue(true) }
             .catch { e -> e.printStackTrace() }
             .collect {

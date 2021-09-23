@@ -1,7 +1,11 @@
 package com.sunday.electromapapp.model.net
 
 import com.sunday.electromapapp.model.vo.Positioninfo
+import com.sunday.electromapapp.model.vo.RequestCurrentPosition
 import kotlinx.coroutines.flow.Flow
+import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface ElectromapApi {
@@ -10,5 +14,5 @@ interface ElectromapApi {
      *
      */
     @POST("/getpositions")
-    fun getpositions(latitude: Double, longitude: Double, ridusKm: Int): Flow<List<Positioninfo>>
+    suspend fun  getpositions(@Body pos: RequestCurrentPosition): Flow<List<Positioninfo>>
 }
