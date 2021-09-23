@@ -18,6 +18,9 @@ import com.sunday.electromapapp.R
 import com.sunday.electromapapp.databinding.MapNaverFragmentBinding
 import com.sunday.electromapapp.view.maps.adapters.NaverInfoWindowAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -27,13 +30,14 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     private lateinit var binding: MapNaverFragmentBinding
     private val vmPositions: PositionsViewModel by viewModels()
     private lateinit var naverMap: NaverMap
-    private lateinit var naverinfoWindow : InfoWindow
+    private lateinit var naverinfoWindow: InfoWindow
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         binding = MapNaverFragmentBinding.inflate(inflater, null, false)
+        binding.viewmodel = vmPositions
         setNaverMap()
         observers()
         return binding.root
@@ -68,7 +72,9 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
      * 새로운 포지션 요청
      */
     fun onNewPosition() {
-        vmPositions.getPosition()
+        GlobalScope.launch(Dispatchers.IO)
+        { vmPositions.getPosition() }
+
     }
 
     override fun onMapReady(naverMap: NaverMap) {
