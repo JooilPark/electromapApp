@@ -5,7 +5,10 @@ import com.sunday.electromapapp.model.vo.RequestCurrentPosition
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @Module
@@ -13,6 +16,8 @@ import javax.inject.Inject
 class MapRepository @Inject constructor() {
 
 
-    suspend fun getPositions(pos: RequestCurrentPosition): Flow<List<Positioninfo>> =
-        RetrofitUtil.getApi().getpositions(pos)
+     fun getPositions(pos: RequestCurrentPosition): Flow<List<Positioninfo>> = flow {
+         emit(RetrofitUtil.getApi().getpositions(pos))
+     }.flowOn(Dispatchers.IO)           
+
 }

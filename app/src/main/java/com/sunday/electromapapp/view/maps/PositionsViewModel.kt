@@ -2,9 +2,7 @@ package com.sunday.electromapapp.view.maps
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.sunday.electromapapp.model.net.MapRepository
 import com.sunday.electromapapp.model.vo.Positioninfo
 import com.sunday.electromapapp.model.vo.RequestCurrentPosition
@@ -35,24 +33,27 @@ class PositionsViewModel @Inject constructor(
     suspend fun getPosition() {
 
         Log.i(TAG, "getPosition")
-        /*positions = liveData {
+       /* positions = liveData {
             Log.i(TAG , "getPosition waiting")
             kotlinx.coroutines.delay(5000) //딜레이 테스트용
-            emitSource(mapReposition.getPositions(37.51408, 127.10440, 10).asLiveData())
+            emitSource(mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).asLiveData())
             isLoading.value = false
             Log.i(TAG , "getPosition waiting end")
         }*/
-
-        /* mapReposition.getPositions(37.51408, 127.10440, 10).collect { it ->
+        //positions = mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).asLiveData()
+         /*mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).collect { it ->
              _positions.postValue(it)
              isLoading.postValue(false)
          }*/
 
         mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10))
-            .onStart { isLoading.postValue(true) }
+            .onStart {
+                Log.i(TAG , "Loading")
+                isLoading.postValue(true) }
             .catch { e -> e.printStackTrace() }
             .collect {
                 _positions.postValue(it)
+                Log.i(TAG , "Loading End")
                 isLoading.postValue(false)
             }
 

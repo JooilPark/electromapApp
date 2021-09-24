@@ -14,5 +14,5 @@ interface ElectromapApi {
      *
      */
     @POST("/getpositions")
-    suspend fun  getpositions(@Body pos: RequestCurrentPosition): Flow<List<Positioninfo>>
+     suspend fun  getpositions(@Body pos: RequestCurrentPosition): List<Positioninfo>
 }
