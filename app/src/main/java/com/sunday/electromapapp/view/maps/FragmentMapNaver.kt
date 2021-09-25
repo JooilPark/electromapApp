@@ -38,6 +38,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     ): View {
         binding = MapNaverFragmentBinding.inflate(inflater, null, false)
         binding.viewmodel = vmPositions
+        binding.lifecycleOwner = viewLifecycleOwner
         setNaverMap()
         observers()
         return binding.root

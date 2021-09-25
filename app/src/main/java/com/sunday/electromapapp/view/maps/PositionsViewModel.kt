@@ -2,11 +2,14 @@ package com.sunday.electromapapp.view.maps
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.sunday.electromapapp.model.net.MapRepository
 import com.sunday.electromapapp.model.vo.Positioninfo
 import com.sunday.electromapapp.model.vo.RequestCurrentPosition
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
@@ -23,8 +26,8 @@ class PositionsViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     private val _positions: MutableLiveData<List<Positioninfo>> = MutableLiveData()
     var positions: LiveData<List<Positioninfo>> = _positions
-    private val _isLoding = MutableLiveData<Boolean>(false)
-    val isLoading = _isLoding
+    private val _isLoding = MutableLiveData(false)
+    val isLoading : LiveData<Boolean> = _isLoding
     private val TAG = "PositionsViewModel"
 
     /**
@@ -33,28 +36,30 @@ class PositionsViewModel @Inject constructor(
     suspend fun getPosition() {
 
         Log.i(TAG, "getPosition")
-       /* positions = liveData {
-            Log.i(TAG , "getPosition waiting")
-            kotlinx.coroutines.delay(5000) //딜레이 테스트용
-            emitSource(mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).asLiveData())
-            isLoading.value = false
-            Log.i(TAG , "getPosition waiting end")
-        }*/
-        //positions = mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).asLiveData()
-         /*mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).collect { it ->
-             _positions.postValue(it)
-             isLoading.postValue(false)
+        /* positions = liveData {
+             Log.i(TAG , "getPosition waiting")
+             kotlinx.coroutines.delay(5000) //딜레이 테스트용
+             emitSource(mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).asLiveData())
+             isLoading.value = false
+             Log.i(TAG , "getPosition waiting end")
          }*/
+        //positions = mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).asLiveData()
+        /*mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).collect { it ->
+            _positions.postValue(it)
+            isLoading.postValue(false)
+        }*/
 
         mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10))
             .onStart {
-                Log.i(TAG , "Loading")
-                isLoading.postValue(true) }
+                Log.i(TAG, "Loading")
+                _isLoding.postValue(true)
+            }
             .catch { e -> e.printStackTrace() }
             .collect {
+                delay(10000)
                 _positions.postValue(it)
-                Log.i(TAG , "Loading End")
-                isLoading.postValue(false)
+                Log.i(TAG, "Loading End")
+                _isLoding.postValue(false)
             }
 
     }

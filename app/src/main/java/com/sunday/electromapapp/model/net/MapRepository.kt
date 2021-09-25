@@ -14,10 +14,8 @@ import javax.inject.Inject
 @Module
 @InstallIn(ActivityComponent::class)
 class MapRepository @Inject constructor() {
-
-
-     fun getPositions(pos: RequestCurrentPosition): Flow<List<Positioninfo>> = flow {
-         emit(RetrofitUtil.getApi().getpositions(pos))
-     }.flowOn(Dispatchers.IO)           
+    fun getPositions(pos: RequestCurrentPosition): Flow<List<Positioninfo>> = flow {
+        emit(RetrofitUtil.getApi().getpositions(pos))
+    }.flowOn(Dispatchers.IO)
 
 }

@@ -37,8 +37,7 @@
                 android:id="@+id/maptools"
                 layout="@layout/include_map_tools"
                 app:isLoading="@{viewmodel.isLoading()}"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="0dp" />
+               />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
