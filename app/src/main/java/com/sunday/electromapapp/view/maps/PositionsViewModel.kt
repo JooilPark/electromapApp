@@ -46,19 +46,6 @@ class PositionsViewModel @Inject constructor(
     suspend fun getPosition(latitude : Double , longitude : Double) {
 
         Log.i(TAG, "getPosition")
-        /* positions = liveData {
-             Log.i(TAG , "getPosition waiting")
-             kotlinx.coroutines.delay(5000) //딜레이 테스트용
-             emitSource(mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).asLiveData())
-             isLoading.value = false
-             Log.i(TAG , "getPosition waiting end")
-         }*/
-        //positions = mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).asLiveData()
-        /*mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10)).collect { it ->
-            _positions.postValue(it)
-            isLoading.postValue(false)
-        }*/
-
         mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, searchRidus))
             .onStart {
                 Log.i(TAG, "Loading")
@@ -80,16 +67,10 @@ class PositionsViewModel @Inject constructor(
      * 처음시작시 위치 표시용
      */
     fun getLastGpsPosition() : Location?{
-        if (ActivityCompat.checkSelfPermission(
-                getApplication(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                getApplication(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return location.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null
         }
-        return null
+        return location.getLastKnownLocation(LocationManager.GPS_PROVIDER)
     }
 }

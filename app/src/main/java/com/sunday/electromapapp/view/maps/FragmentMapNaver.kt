@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
@@ -108,6 +109,16 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
 
         vmPositions.getLastGpsPosition()?.let {
             onNewPosition(it.latitude, it.longitude)
+        }
+
+        when(val location = vmPositions.getLastGpsPosition()){
+            null ->{
+                Toast.makeText(requireContext() , "권한 체크 필요 ?" , Toast.LENGTH_LONG ).show()
+            }
+            else ->{
+                Toast.makeText(requireContext() , "위치 확인" , Toast.LENGTH_LONG ).show()
+                onNewPosition(location.latitude , location.longitude)
+            }
         }
 
         naverMap.setOnMapClickListener { pointF, latLng ->
