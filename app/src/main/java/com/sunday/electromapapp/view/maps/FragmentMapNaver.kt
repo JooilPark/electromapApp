@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -41,9 +39,22 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
         binding.lifecycleOwner = viewLifecycleOwner
         setNaverMap()
         observers()
+        init()
         return binding.root
     }
 
+    private fun init() {
+        binding.maptools.reFrashGps.setOnClickListener {
+            vmPositions.getLastGpsPosition()
+        }
+        binding.maptools.reFrashList.setOnClickListener {
+
+        }
+    }
+
+    /**
+     * 지도 설정
+     */
     private fun setNaverMap() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
             ?: MapFragment.newInstance().also {
@@ -52,8 +63,11 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
+    /**
+     * 옵저버들 설정
+     */
     private fun observers() {
-        vmPositions.positions.observe(this.viewLifecycleOwner, Observer {
+        vmPositions.positions.observe(this.viewLifecycleOwner, {
             it.forEach { positioninfo ->
                 Marker().apply {
                     position = LatLng(positioninfo.latitude, positioninfo.longitude)
@@ -70,16 +84,16 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     }
 
     /**
-     * 새로운 포지션 요청
+     * 지금위치의 충전소 목록 가져온다 .
      */
-    fun onNewPosition() {
+    fun onNewPosition(latitude: Double, longitude: Double) {
         GlobalScope.launch(Dispatchers.IO)
-        { vmPositions.getPosition() }
+        { vmPositions.getPosition(latitude, longitude) }
 
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        Toast.makeText(requireContext(), "onMapReady", Toast.LENGTH_SHORT).show()
+        this.naverMap = naverMap
         val infoWindow = InfoWindow().apply {
             offsetX = resources.getDimensionPixelSize(R.dimen.custom_info_window_offset_x)
             offsetY = resources.getDimensionPixelSize(R.dimen.custom_info_window_offset_y)
@@ -91,14 +105,25 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
 
         }
         naverinfoWindow = infoWindow
-        this.naverMap = naverMap
-        onNewPosition()
+
+        vmPositions.getLastGpsPosition()?.let {
+            onNewPosition(it.latitude, it.longitude)
+        }
 
         naverMap.setOnMapClickListener { pointF, latLng ->
             infoWindow.position = latLng
             infoWindow.close()
         }
 
+
     }
 
+    /**
+     * 네이버 API
+     * 지금 지도에서 보고 있는 위치로 확인
+     *
+     */
+    fun getCurrentPosition() {
+        val position = naverMap.cameraPosition
+    }
 }

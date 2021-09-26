@@ -1,7 +1,13 @@
 package com.sunday.electromapapp.view.maps
 
+import android.Manifest
 import android.app.Application
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationManager
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,11 +35,15 @@ class PositionsViewModel @Inject constructor(
     private val _isLoding = MutableLiveData(false)
     val isLoading : LiveData<Boolean> = _isLoding
     private val TAG = "PositionsViewModel"
-
     /**
-     * 지금 위치에서 가능한 정보 확인
+     * 검색범위
      */
-    suspend fun getPosition() {
+    private val searchRidus = 20
+    private var location  : LocationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    /**
+     * 지금 위치에서 가능한 충전소 정보 확인
+     */
+    suspend fun getPosition(latitude : Double , longitude : Double) {
 
         Log.i(TAG, "getPosition")
         /* positions = liveData {
@@ -49,7 +59,7 @@ class PositionsViewModel @Inject constructor(
             isLoading.postValue(false)
         }*/
 
-        mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, 10))
+        mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, searchRidus))
             .onStart {
                 Log.i(TAG, "Loading")
                 _isLoding.postValue(true)
@@ -62,5 +72,24 @@ class PositionsViewModel @Inject constructor(
                 _isLoding.postValue(false)
             }
 
+    }
+
+    /**
+     * Android Api
+     * 위치 정보 가져오기
+     * 처음시작시 위치 표시용
+     */
+    fun getLastGpsPosition() : Location?{
+        if (ActivityCompat.checkSelfPermission(
+                getApplication(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                getApplication(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return location.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        }
+        return null
     }
 }
