@@ -19,6 +19,12 @@ class NaverInfoWindowAdapter(private val context: Context) : InfoWindow.ViewAdap
         itemView.tvPhone.text = item.managerFacilityPhone
         itemView.tvLocationName.text = item.facilityName
         itemView.ivChargeOnoff.isEnabled = item.isRechargeEnable()
+        itemView.day1.isWork = item.isWeek()
+        itemView.day2.isWork = item.isWeek()
+        itemView.day3.isWork = item.isWeek()
+
+
+
         Log.i("adapter" , "${item}")
         return itemView.root
     }

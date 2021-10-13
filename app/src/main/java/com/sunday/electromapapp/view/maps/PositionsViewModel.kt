@@ -1,6 +1,8 @@
 package com.sunday.electromapapp.view.maps
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
@@ -8,9 +10,13 @@ import android.location.Location
 import android.location.LocationManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.sunday.electromapapp.model.net.MapRepository
 import com.sunday.electromapapp.model.vo.Positioninfo
 import com.sunday.electromapapp.model.vo.RequestCurrentPosition
@@ -25,35 +31,52 @@ import javax.inject.Inject
  * 1. 서버에서맵 정보 받아오기
  * 2. 위치 정보 확인 .
  */
+
 @HiltViewModel
 class PositionsViewModel @Inject constructor(
     application: Application,
     private val mapReposition: MapRepository
 ) : AndroidViewModel(application) {
+    private val context:Context = getApplication<Application>().applicationContext as Context
+
+
     private val _positions: MutableLiveData<List<Positioninfo>> = MutableLiveData()
+    val _location: MutableLiveData<Location> = MutableLiveData()
+    val currlocatoin: LiveData<Location> = _location
     var positions: LiveData<List<Positioninfo>> = _positions
     private val _isLoding = MutableLiveData(false)
-    val isLoading : LiveData<Boolean> = _isLoding
+    val isLoading: LiveData<Boolean> = _isLoding
     private val TAG = "PositionsViewModel"
+
+    init {
+
+
+
+
+    }
+
+
+
     /**
      * 검색범위
      */
     private val searchRidus = 20
-    private var location  : LocationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private var location: LocationManager =
+        application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
     /**
      * 지금 위치에서 가능한 충전소 정보 확인
      */
-    suspend fun getPosition(latitude : Double , longitude : Double) {
+    suspend fun getPosition(latitude: Double, longitude: Double) {
 
         Log.i(TAG, "getPosition")
-        mapReposition.getPositions(RequestCurrentPosition(37.51408, 127.10440, searchRidus))
+        mapReposition.getPositions(RequestCurrentPosition(latitude, longitude, searchRidus))
             .onStart {
                 Log.i(TAG, "Loading")
                 _isLoding.postValue(true)
             }
             .catch { e -> e.printStackTrace() }
             .collect {
-                delay(10000)
                 _positions.postValue(it)
                 Log.i(TAG, "Loading End")
                 _isLoding.postValue(false)
@@ -66,11 +89,24 @@ class PositionsViewModel @Inject constructor(
      * 위치 정보 가져오기
      * 처음시작시 위치 표시용
      */
-    fun getLastGpsPosition() : Location?{
-        if (ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(getApplication(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return null
+    fun getLastGpsPosition() {
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            _location.postValue(null)
+            return
         }
-        return location.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        _location.postValue(location.getLastKnownLocation(LocationManager.GPS_PROVIDER))
+
     }
+
+
+
+
 }

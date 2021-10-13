@@ -71,26 +71,29 @@ data class Positioninfo(
         val nowTime = LocalTime.now()
         when (nowDay.dayOfWeek.value) {
             in 1..5 -> {
-                return isWeek && (weeklyTimeStart.isAfter(nowTime) && weeklyTimeEnd.isBefore(nowTime))
+                return isWeek() && (weeklyTimeStart.isAfter(nowTime) && weeklyTimeEnd.isBefore(nowTime))
             }
             6 -> {
-                return isSaturday && (weeklySetdayStart.isAfter(nowTime) && weeklySetdayEnd.isBefore(
+                return isSaturday() && (weeklySetdayStart.isAfter(nowTime) && weeklySetdayEnd.isBefore(
                     nowTime))
             }
             7 -> {
-                return isSunday && (weeklySundayStart.isAfter(nowTime) && weeklySundayEnd.isBefore(
+                return isSunday() && (weeklySundayStart.isAfter(nowTime) && weeklySundayEnd.isBefore(
                     nowTime))
             }
         }
         return false
     }
 
-    val isWeek: Boolean =
-        (!(weeklyTimeStart.second == 0 && weeklyTimeEnd.second == 0))
-    val isSaturday: Boolean =
-        (!(weeklySetdayStart.second == 0 && weeklySetdayEnd.second == 0))
-    val isSunday: Boolean =
-        (!(weeklySundayStart.second == 0 && weeklySundayEnd.second == 0))
+    fun isWeek(): Boolean =
+        (!(weeklyTimeStart.toSecondOfDay() == 0 && weeklyTimeEnd.toSecondOfDay() == 0))
+    fun isSaturday(): Boolean =
+        (!(weeklySetdayStart.toSecondOfDay() == 0 && weeklySetdayEnd.toSecondOfDay() == 0))
+    fun isSunday(): Boolean =
+        (!(weeklySundayStart.toSecondOfDay() == 0 && weeklySundayEnd.toSecondOfDay() == 0))
 
+    fun logWeek ()= "${isWeek()} start $weeklyTimeStart end $weeklyTimeEnd"
+    fun logSat ()= "${isSaturday()} start $weeklySetdayStart end $weeklySetdayEnd"
+    fun logSun ()= "${isSunday()} start $weeklySundayStart end $weeklySundayEnd"
 
 }
