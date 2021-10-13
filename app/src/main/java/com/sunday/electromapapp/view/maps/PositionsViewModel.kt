@@ -1,8 +1,6 @@
 package com.sunday.electromapapp.view.maps
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
@@ -10,18 +8,13 @@ import android.location.Location
 import android.location.LocationManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.sunday.electromapapp.model.net.MapRepository
 import com.sunday.electromapapp.model.vo.Positioninfo
 import com.sunday.electromapapp.model.vo.RequestCurrentPosition
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
@@ -35,9 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 class PositionsViewModel @Inject constructor(
     application: Application,
-    private val mapReposition: MapRepository
+    private val mapReposition: MapRepository,
 ) : AndroidViewModel(application) {
-    private val context:Context = getApplication<Application>().applicationContext as Context
+    private val context: Context = getApplication<Application>().applicationContext as Context
 
 
     private val _positions: MutableLiveData<List<Positioninfo>> = MutableLiveData()
@@ -51,10 +44,7 @@ class PositionsViewModel @Inject constructor(
     init {
 
 
-
-
     }
-
 
 
     /**
@@ -105,8 +95,6 @@ class PositionsViewModel @Inject constructor(
         _location.postValue(location.getLastKnownLocation(LocationManager.GPS_PROVIDER))
 
     }
-
-
 
 
 }

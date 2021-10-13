@@ -6,7 +6,7 @@
 
         <variable
             name="textDay"
-            type="java.lang.String" /><!-- 요일 -->
+            type="String" /><!-- 요일 -->
         <variable
             name="isWork"
             type="Boolean" /><!--동작 -->
@@ -24,8 +24,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:src="@{isWork ? @drawable/ischarge_on : @drawable/ischarge_off}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -33,11 +33,12 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
                 android:includeFontPadding="false"
                 android:text="@{textDay}"
                 android:textAllCaps="false"
+                android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"

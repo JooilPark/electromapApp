@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.naver.maps.map.overlay.InfoWindow
+import com.sunday.electromapapp.BR
 import com.sunday.electromapapp.R
 import com.sunday.electromapapp.databinding.ItemMapMakerBinding
 import com.sunday.electromapapp.model.vo.Positioninfo
@@ -19,10 +20,7 @@ class NaverInfoWindowAdapter(private val context: Context) : InfoWindow.ViewAdap
         itemView.tvPhone.text = item.managerFacilityPhone
         itemView.tvLocationName.text = item.facilityName
         itemView.ivChargeOnoff.isEnabled = item.isRechargeEnable()
-        itemView.day1.isWork = item.isWeek()
-        itemView.day2.isWork = item.isWeek()
-        itemView.day3.isWork = item.isWeek()
-
+        itemView.executePendingBindings()
 
 
         Log.i("adapter" , "${item}")
