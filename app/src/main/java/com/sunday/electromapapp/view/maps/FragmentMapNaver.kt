@@ -22,6 +22,7 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Align
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.MarkerIcons
 import com.sunday.electromapapp.R
 import com.sunday.electromapapp.databinding.MapNaverFragmentBinding
 import com.sunday.electromapapp.view.maps.adapters.NaverInfoWindowAdapter
@@ -34,6 +35,10 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 //https://navermaps.github.io/android-map-sdk/guide-ko/1.html
 //https://navermaps.github.io/android-map-sdk/guide-ko/5-3.html
+/**
+ * 남은이슈
+ *
+ */
 class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     private lateinit var binding: MapNaverFragmentBinding
     private val vmPositions: PositionsViewModel by viewModels()
@@ -85,14 +90,10 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
             it.forEach { positioninfo ->
 
 
-                Log.i(TAG ,"${positioninfo.facilityName} ${positioninfo.logSat()}")
-                Log.i(TAG ,"${positioninfo.facilityName} ${positioninfo.logSun()}")
-                Log.i(TAG ,"${positioninfo.facilityName} ${positioninfo.logWeek()}")
-
-
                 Marker().apply {
                     position = LatLng(positioninfo.latitude, positioninfo.longitude)
                     angle = 0f
+                    icon = if (positioninfo.isRechargeEnable()) MarkerIcons.GREEN else MarkerIcons.GRAY
                     setOnClickListener {
                         naverinfoWindow.open(this, Align.Left)
                         true
@@ -117,7 +118,6 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
                     onNewPosition(it.latitude, it.longitude)
                 }
             }
-
         })
     }
 
@@ -141,14 +141,9 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
                 close()
                 true
             }
-
         }
         naverinfoWindow = infoWindow
-
         vmPositions.getLastGpsPosition()
-
-
-
         naverMap.setOnMapClickListener { pointF, latLng ->
             infoWindow.position = latLng
             infoWindow.close()

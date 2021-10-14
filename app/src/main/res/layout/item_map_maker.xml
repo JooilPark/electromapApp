@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.sunday.electromapapp.model.vo.Positioninfo" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,9 +40,9 @@
                 android:includeFontPadding="false"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:maxLines="1"
+                android:text="@{item.facilityName}"
                 android:textColor="@color/defaulttextcolor_FF"
                 android:textSize="12sp"
-                android:text="@{item.facilityName}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="장애인 전동보장구 충전기(영춘면별방민원센터)" />
@@ -83,8 +81,8 @@
                         android:id="@+id/day1"
                         layout="@layout/view_maker_item_day"
                         app:isWork="@{item.isWeek}"
-                        app:textDay="@{`월`}"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:textDay="@{`월`}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -97,8 +95,8 @@
                         android:id="@+id/day2"
                         layout="@layout/view_maker_item_day"
                         app:isWork="@{item.isWeek}"
-                        app:textDay="@{`화`}"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:textDay="@{`화`}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -108,11 +106,11 @@
                     android:gravity="start">
 
                     <include
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isWeek}"
                         android:id="@+id/day3"
-                        app:textDay="@{`수`}"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isWeek}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:textDay="@{`수`}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -122,25 +120,11 @@
                     android:gravity="start">
 
                     <include
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isWeek}"
                         android:id="@+id/day4"
-                        app:textDay="@{`목`}"
-                        app:layout_constraintStart_toStartOf="parent" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start">
-
-                    <include
                         layout="@layout/view_maker_item_day"
                         app:isWork="@{item.isWeek}"
-                        android:id="@+id/day5"
-                        app:textDay="@{`금`}"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:textDay="@{`목`}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -150,11 +134,25 @@
                     android:gravity="start">
 
                     <include
+                        android:id="@+id/day5"
+                        layout="@layout/view_maker_item_day"
+                        app:isWork="@{item.isWeek}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:textDay="@{`금`}" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start">
+
+                    <include
+                        android:id="@+id/day6"
                         layout="@layout/view_maker_item_day"
                         app:isWork="@{item.isSaturday}"
-                        android:id="@+id/day6"
-                        app:textDay="@{`토`}"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:textDay="@{`토`}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -164,11 +162,11 @@
                     android:gravity="start">
 
                     <include
+                        android:id="@+id/day7"
                         layout="@layout/view_maker_item_day"
                         app:isWork="@{item.isSunday}"
-                        android:id="@+id/day7"
-                        app:textDay="@{`일`}"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:textDay="@{`일`}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

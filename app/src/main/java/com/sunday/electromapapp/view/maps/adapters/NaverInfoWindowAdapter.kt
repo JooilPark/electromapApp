@@ -17,8 +17,7 @@ class NaverInfoWindowAdapter(private val context: Context) : InfoWindow.ViewAdap
         //val itemView = ItemMapMakerBinding.inflate(LayoutInflater.from(context) , null , false)
         val itemView =DataBindingUtil.inflate<ItemMapMakerBinding>(LayoutInflater.from(context) , R.layout.item_map_maker , null , false)
         val item = infoWindow.marker!!.tag as Positioninfo
-        itemView.tvPhone.text = item.managerFacilityPhone
-        itemView.tvLocationName.text = item.facilityName
+        itemView.item = item
         itemView.ivChargeOnoff.isEnabled = item.isRechargeEnable()
         itemView.executePendingBindings()
 

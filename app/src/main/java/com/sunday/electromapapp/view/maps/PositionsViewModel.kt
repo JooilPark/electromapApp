@@ -62,13 +62,13 @@ class PositionsViewModel @Inject constructor(
         Log.i(TAG, "getPosition")
         mapReposition.getPositions(RequestCurrentPosition(latitude, longitude, searchRidus))
             .onStart {
-                Log.i(TAG, "Loading")
+
                 _isLoding.postValue(true)
             }
             .catch { e -> e.printStackTrace() }
             .collect {
                 _positions.postValue(it)
-                Log.i(TAG, "Loading End")
+
                 _isLoding.postValue(false)
             }
 
