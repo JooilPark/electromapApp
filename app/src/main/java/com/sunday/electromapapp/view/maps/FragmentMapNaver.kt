@@ -25,6 +25,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.MarkerIcons
 import com.sunday.electromapapp.R
 import com.sunday.electromapapp.databinding.MapNaverFragmentBinding
+import com.sunday.electromapapp.model.vo.Positioninfo
 import com.sunday.electromapapp.view.maps.adapters.NaverInfoWindowAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -65,7 +66,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
             vmPositions.getLastGpsPosition()
         }
         binding.maptools.reFrashList.setOnClickListener {
-            naverMap.cameraPosition?.let {
+            naverMap.cameraPosition.let {
                 onNewPosition(it.target.latitude, it.target.longitude)
             }
         }
@@ -81,26 +82,37 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
             }
         mapFragment.getMapAsync(this)
     }
+
     val TAG = "Map"
+    var mapMakers = arrayListOf<Marker>()
+
     /**
      * 옵저버들 설정
      */
     private fun observers() {
         vmPositions.positions.observe(this.viewLifecycleOwner, {
+            mapMakers.forEach {
+                it.map = null
+            }
+
+            Log.i(TAG , "크기 ${mapMakers.size}" )
+            mapMakers.clear()
             it.forEach { positioninfo ->
 
 
-                Marker().apply {
+                mapMakers.add(Marker().apply {
                     position = LatLng(positioninfo.latitude, positioninfo.longitude)
                     angle = 0f
-                    icon = if (positioninfo.isRechargeEnable()) MarkerIcons.GREEN else MarkerIcons.GRAY
+                    icon =
+                        if (positioninfo.isRechargeEnable()) MarkerIcons.GREEN else MarkerIcons.GRAY
                     setOnClickListener {
                         naverinfoWindow.open(this, Align.Left)
                         true
                     }
                     tag = positioninfo
                     map = naverMap
-                }
+                })
+
 
             }
         })
@@ -109,7 +121,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
                 null -> {
                     // 그냥 맵에서 가운데 좌표로 호출한다 .
                     Toast.makeText(requireContext(), "권한 체크 필요 ?", Toast.LENGTH_LONG).show()
-                    naverMap.cameraPosition?.let {
+                    naverMap.cameraPosition.let {
                         onNewPosition(it.target.latitude, it.target.latitude)
                     }
                 }
@@ -132,6 +144,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
+
 
         val infoWindow = InfoWindow().apply {
             offsetX = resources.getDimensionPixelSize(R.dimen.custom_info_window_offset_x)
@@ -160,6 +173,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     fun getCurrentPosition() {
         val position = naverMap.cameraPosition
     }
+
     private val LOCATION_REQUEST_INTERVAL = 1000
     private val PERMISSION_REQUEST_CODE = 100
     private val PERMISSIONS = arrayOf(
@@ -192,13 +206,14 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     ) {
 
 
-        if(grantResults.all { it == PackageManager.PERMISSION_GRANTED }){
+        if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
             getLocationInit()
         }
     }
 
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
     @SuppressLint("MissingPermission")
     fun getLocationInit() {
         fusedLocationProviderClient =
