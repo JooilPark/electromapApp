@@ -13,9 +13,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -25,7 +27,6 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.MarkerIcons
 import com.sunday.electromapapp.R
 import com.sunday.electromapapp.databinding.MapNaverFragmentBinding
-import com.sunday.electromapapp.model.vo.Positioninfo
 import com.sunday.electromapapp.view.maps.adapters.NaverInfoWindowAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +39,8 @@ import kotlinx.coroutines.launch
 //https://navermaps.github.io/android-map-sdk/guide-ko/5-3.html
 /**
  * 남은이슈
- *
+ * 1. 마커 시간표시에 관한 문제 .
+ * 2.
  */
 class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     private lateinit var binding: MapNaverFragmentBinding
@@ -95,7 +97,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
                 it.map = null
             }
 
-            Log.i(TAG , "크기 ${mapMakers.size}" )
+            Log.i(TAG, "크기 ${mapMakers.size}")
             mapMakers.clear()
             it.forEach { positioninfo ->
 
@@ -128,6 +130,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
                 else -> {
                     Toast.makeText(requireContext(), "위치 확인", Toast.LENGTH_LONG).show()
                     onNewPosition(it.latitude, it.longitude)
+                    naverMap.moveCamera(CameraUpdate.scrollTo(LatLng(it.latitude, it.longitude)))
                 }
             }
         })
@@ -152,6 +155,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
             adapter = NaverInfoWindowAdapter(requireContext())
             setOnClickListener {
                 close()
+                findNavController().navigate(FragmentMapNaverDirections.actionFragmentMapNaverToPositionDetailFragment())
                 true
             }
         }

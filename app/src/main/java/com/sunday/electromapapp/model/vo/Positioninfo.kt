@@ -56,9 +56,7 @@ data class Positioninfo(
         "",
         "",
         ""
-    ) {
-
-    }
+    )
 
 
     // 1. 지금 충전 가능 상태 확인
@@ -71,17 +69,20 @@ data class Positioninfo(
     fun isRechargeEnable(): Boolean {
         val nowDay = LocalDate.now()
         val nowTime = LocalTime.now()
+
         when (nowDay.dayOfWeek.value) {
             in 1..5 -> {
-                return isWeek() && (weeklyTimeStart.isAfter(nowTime) && weeklyTimeEnd.isBefore(nowTime))
+                return isWeek() && (weeklyTimeStart.isBefore(nowTime) &&
+                        weeklyTimeEnd.isAfter(nowTime))
+
             }
             6 -> {
-                return isSaturday() && (weeklySetdayStart.isAfter(nowTime) && weeklySetdayEnd.isBefore(
-                    nowTime))
+                return isSaturday() && (weeklySetdayStart.isBefore(nowTime) &&
+                        weeklySetdayEnd.isAfter(nowTime))
             }
             7 -> {
-                return isSunday() && (weeklySundayStart.isAfter(nowTime) && weeklySundayEnd.isBefore(
-                    nowTime))
+                return isSunday() && (weeklySundayStart.isBefore(nowTime) &&
+                        weeklySundayEnd.isAfter(nowTime))
             }
         }
         return false
@@ -89,13 +90,15 @@ data class Positioninfo(
 
     fun isWeek(): Boolean =
         (!(weeklyTimeStart.toSecondOfDay() == 0 && weeklyTimeEnd.toSecondOfDay() == 0))
+
     fun isSaturday(): Boolean =
         (!(weeklySetdayStart.toSecondOfDay() == 0 && weeklySetdayEnd.toSecondOfDay() == 0))
+
     fun isSunday(): Boolean =
         (!(weeklySundayStart.toSecondOfDay() == 0 && weeklySundayEnd.toSecondOfDay() == 0))
 
-    fun logWeek ()= "${isWeek()} start $weeklyTimeStart end $weeklyTimeEnd"
-    fun logSat ()= "${isSaturday()} start $weeklySetdayStart end $weeklySetdayEnd"
-    fun logSun ()= "${isSunday()} start $weeklySundayStart end $weeklySundayEnd"
+    fun logWeek() = "${isWeek()} start $weeklyTimeStart end $weeklyTimeEnd"
+    fun logSat() = "${isSaturday()} start $weeklySetdayStart end $weeklySetdayEnd"
+    fun logSun() = "${isSunday()} start $weeklySundayStart end $weeklySundayEnd"
 
 }

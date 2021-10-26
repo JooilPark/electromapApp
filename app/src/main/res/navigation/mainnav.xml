@@ -26,9 +26,22 @@
     <fragment
         android:id="@+id/fragmentMapNaver"
         android:name="com.sunday.electromapapp.view.maps.FragmentMapNaver"
-        android:label="FragmentMapNaver" />
+        android:label="FragmentMapNaver" >
+        <action
+            android:id="@+id/action_fragmentMapNaver_to_positionDetailFragment"
+            app:destination="@id/positionDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentMapKakao"
         android:name="com.sunday.electromapapp.view.maps.FragmentMapKakao"
-        android:label="FragmentMapKakao" />
+        android:label="FragmentMapKakao" >
+        <action
+            android:id="@+id/action_fragmentMapKakao_to_positionDetailFragment"
+            app:destination="@id/positionDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/positionDetailFragment"
+        android:name="com.sunday.electromapapp.PositionDetailFragment"
+        android:label="fragment_position_detail"
+        tools:layout="@layout/fragment_position_detail" />
 </navigation>
