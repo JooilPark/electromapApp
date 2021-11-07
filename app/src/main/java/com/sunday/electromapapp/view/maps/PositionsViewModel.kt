@@ -30,7 +30,7 @@ class PositionsViewModel @Inject constructor(
     application: Application,
     private val mapReposition: MapRepository,
 ) : AndroidViewModel(application) {
-    private val context: Context = getApplication<Application>().applicationContext as Context
+    //private val context: Context by lazy { getApplication<Application>().applicationContext as Context }
 
 
     private val _positions: MutableLiveData<List<Positioninfo>> = MutableLiveData()
@@ -81,11 +81,11 @@ class PositionsViewModel @Inject constructor(
      */
     fun getLastGpsPosition() {
         if (ActivityCompat.checkSelfPermission(
-                context,
+                getApplication(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(
-                context,
+                getApplication(),
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
