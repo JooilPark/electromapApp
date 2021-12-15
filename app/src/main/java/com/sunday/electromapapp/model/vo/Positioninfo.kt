@@ -1,5 +1,7 @@
 package com.sunday.electromapapp.model.vo
 
+import android.os.Parcel
+import android.os.Parcelable
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -29,8 +31,7 @@ data class Positioninfo(
     val providerCode: String,// 제공기관코드
     val providerName: String,// 제공기관코드
 
-) {
-
+)  : Parcelable{
     constructor(facilityName: String, latitude: Double, longitude: Double) : this(
         0,
         facilityName,
@@ -59,10 +60,39 @@ data class Positioninfo(
     )
 
 
+
     // 1. 지금 충전 가능 상태 확인
     // 2. 요일별로 충전이 가능한 상태 표시
     // 00:00 24:00
     // 00:00 00:00
+    constructor(parcel: Parcel) : this(
+        parcel.readLong(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readDouble(),
+        parcel.readDouble(),
+        parcel.readString()!!,
+        parcel.readSerializable() as LocalTime,
+        parcel.readSerializable() as LocalTime,
+        parcel.readSerializable() as LocalTime,
+        parcel.readSerializable() as LocalTime,
+        parcel.readSerializable() as LocalTime,
+        parcel.readSerializable() as LocalTime,
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!
+    ) {
+    }
+
     /**
      * 지금 충전 가능한가 >
      */
@@ -100,5 +130,46 @@ data class Positioninfo(
     fun logWeek() = "${isWeek()} start $weeklyTimeStart end $weeklyTimeEnd"
     fun logSat() = "${isSaturday()} start $weeklySetdayStart end $weeklySetdayEnd"
     fun logSun() = "${isSunday()} start $weeklySundayStart end $weeklySundayEnd"
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun writeToParcel(parcel: Parcel, p1: Int) {
+
+        parcel.writeLong(this@Positioninfo.id)
+        parcel.writeString(this@Positioninfo.facilityName)
+        parcel.writeString(this@Positioninfo.cityName)
+        parcel.writeString(this@Positioninfo.countryName)
+        parcel.writeString(this@Positioninfo.countryCode)
+        parcel.writeString(this@Positioninfo.addressRoad)
+        parcel.writeString(this@Positioninfo.addressNumber)
+        parcel.writeDouble(this@Positioninfo.latitude)
+        parcel.writeDouble(this@Positioninfo.longitude)
+        parcel.writeString(this@Positioninfo.pleaceDescription)
+        parcel.writeSerializable(this@Positioninfo.weeklyTimeStart)
+        parcel.writeSerializable(this@Positioninfo.weeklyTimeEnd)
+        parcel.writeSerializable(this@Positioninfo.weeklySetdayStart)
+        parcel.writeSerializable(this@Positioninfo.weeklySetdayEnd)
+        parcel.writeSerializable(this@Positioninfo.weeklySundayStart)
+        parcel.writeSerializable(this@Positioninfo.weeklySundayEnd)
+        parcel.writeInt(this@Positioninfo.useNumber)
+        parcel.writeValue(this@Positioninfo.aircompresser)
+        parcel.writeValue(this@Positioninfo.phoneChager)
+        parcel.writeString(this@Positioninfo.managerFacilityName)
+        parcel.writeString(this@Positioninfo.managerFacilityPhone)
+        parcel.writeString(this@Positioninfo.keyDay)
+        parcel.writeString(this@Positioninfo.providerCode)
+        parcel.writeString(this@Positioninfo.providerName)
+    }
+
+    companion object CREATOR : Parcelable.Creator<Positioninfo> {
+        override fun createFromParcel(parcel: Parcel): Positioninfo {
+            return Positioninfo(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Positioninfo?> {
+            return arrayOfNulls(size)
+        }
+    }
 
 }

@@ -58,20 +58,16 @@ class PositionsViewModel @Inject constructor(
      * 지금 위치에서 가능한 충전소 정보 확인
      */
     suspend fun getPosition(latitude: Double, longitude: Double) {
-
         Log.i(TAG, "getPosition")
         mapReposition.getPositions(RequestCurrentPosition(latitude, longitude, searchRidus))
             .onStart {
-
                 _isLoding.postValue(true)
             }
             .catch { e -> e.printStackTrace() }
             .collect {
                 _positions.postValue(it)
-
                 _isLoding.postValue(false)
             }
-
     }
 
     /**

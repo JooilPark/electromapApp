@@ -14,7 +14,6 @@ import com.sunday.electromapapp.model.vo.Positioninfo
 class NaverInfoWindowAdapter(private val context: Context) : InfoWindow.ViewAdapter() {
 
     override fun getView(infoWindow: InfoWindow): View {
-        //val itemView = ItemMapMakerBinding.inflate(LayoutInflater.from(context) , null , false)
         val itemView =DataBindingUtil.inflate<ItemMapMakerBinding>(LayoutInflater.from(context) , R.layout.item_map_maker , null , false)
         val item = infoWindow.marker!!.tag as Positioninfo
         itemView.item = item

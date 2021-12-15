@@ -22,6 +22,7 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/introFragment"
             app:popUpToInclusive="true" />
+
     </fragment>
     <fragment
         android:id="@+id/fragmentMapNaver"
@@ -29,7 +30,9 @@
         android:label="FragmentMapNaver" >
         <action
             android:id="@+id/action_fragmentMapNaver_to_positionDetailFragment"
-            app:destination="@id/positionDetailFragment" />
+            app:destination="@id/positionDetailFragment" >
+
+        </action>
     </fragment>
     <fragment
         android:id="@+id/fragmentMapKakao"
@@ -43,5 +46,10 @@
         android:id="@+id/positionDetailFragment"
         android:name="com.sunday.electromapapp.PositionDetailFragment"
         android:label="fragment_position_detail"
-        tools:layout="@layout/fragment_position_detail" />
+        tools:layout="@layout/fragment_position_detail" >
+
+        <argument
+            android:name="item"
+            app:argType="com.sunday.electromapapp.model.vo.Positioninfo" />
+    </fragment>
 </navigation>

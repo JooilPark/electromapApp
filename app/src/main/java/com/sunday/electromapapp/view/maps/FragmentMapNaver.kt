@@ -27,6 +27,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.MarkerIcons
 import com.sunday.electromapapp.R
 import com.sunday.electromapapp.databinding.MapNaverFragmentBinding
+import com.sunday.electromapapp.model.vo.Positioninfo
 import com.sunday.electromapapp.view.maps.adapters.NaverInfoWindowAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -48,9 +49,9 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
     private lateinit var naverinfoWindow: InfoWindow
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?,
     ): View {
         binding = MapNaverFragmentBinding.inflate(inflater, null, false)
         binding.viewmodel = vmPositions
@@ -79,9 +80,9 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
      */
     private fun setNaverMap() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                childFragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
-            }
+                ?: MapFragment.newInstance().also {
+                    childFragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
+                }
         mapFragment.getMapAsync(this)
     }
 
@@ -106,8 +107,9 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
                     position = LatLng(positioninfo.latitude, positioninfo.longitude)
                     angle = 0f
                     icon =
-                        if (positioninfo.isRechargeEnable()) MarkerIcons.GREEN else MarkerIcons.GRAY
+                            if (positioninfo.isRechargeEnable()) MarkerIcons.GREEN else MarkerIcons.GRAY
                     setOnClickListener {
+                        naverinfoWindow.tag = positioninfo
                         naverinfoWindow.open(this, Align.Left)
                         true
                     }
@@ -155,7 +157,8 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
             adapter = NaverInfoWindowAdapter(requireContext())
             setOnClickListener {
                 close()
-                findNavController().navigate(FragmentMapNaverDirections.actionFragmentMapNaverToPositionDetailFragment())
+                Log.i(TAG, "${it.tag!!.javaClass.name}")
+                findNavController().navigate(FragmentMapNaverDirections.actionFragmentMapNaverToPositionDetailFragment(it.tag as Positioninfo))
                 true
             }
         }
@@ -181,32 +184,32 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     private val LOCATION_REQUEST_INTERVAL = 1000
     private val PERMISSION_REQUEST_CODE = 100
     private val PERMISSIONS = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
     )
 
     private fun tryEnableLocation() {
 
         if (PERMISSIONS.all {
-                ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    it
-                ) == PermissionChecker.PERMISSION_GRANTED
-            }) {
+                    ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            it
+                    ) == PermissionChecker.PERMISSION_GRANTED
+                }) {
             getLocationInit()
         } else {
             ActivityCompat.requestPermissions(
-                requireActivity(),
-                PERMISSIONS,
-                PERMISSION_REQUEST_CODE
+                    requireActivity(),
+                    PERMISSIONS,
+                    PERMISSION_REQUEST_CODE
             )
         }
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
 
 
@@ -221,7 +224,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     fun getLocationInit() {
         fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
+                LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationProviderClient.lastLocation.addOnSuccessListener {
             vmPositions._location.postValue(it)
         }
