@@ -1,31 +1,23 @@
 package com.sunday.electromapapp.model.net
 
-import android.util.Log
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
-import javax.inject.Singleton
-import com.google.gson.JsonParseException
-
-import com.google.gson.JsonDeserializationContext
-
-import com.google.gson.JsonElement
-
-import com.google.gson.Gson
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Singleton
 
 
 @Singleton
 object RetrofitUtil {
     //private val baseUrl = "http://52.78.33.240:8080"
-    private val baseUrl = "http://www.ewheelmap.com:8080/"
+
+    const val baseUrl = "http://www.ewheelmap.com:8080/"
     private val TAG = "RetrofitUtil"
     private val gson = GsonBuilder()
         .registerTypeAdapter(
@@ -47,14 +39,14 @@ object RetrofitUtil {
         .registerTypeAdapter(
             LocalTime::class.java,
             JsonDeserializer { json, typeOfT, context ->
-                when(json.asString.length){
-                    5->{
+                when (json.asString.length) {
+                    5 -> {
                         LocalTime.parse(
                             json.asString,
                             DateTimeFormatter.ofPattern("HH:mm")
                         )
                     }
-                    else ->{
+                    else -> {
                         LocalTime.parse(
                             json.asString,
                             DateTimeFormatter.ofPattern("HH:mm:ss")
