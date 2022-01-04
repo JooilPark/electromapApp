@@ -1,7 +1,6 @@
 package com.sunday.electromapapp.view.maps
 
-import androidx.fragment.app.Fragment
+import androidx.databinding.ViewDataBinding
+import com.sunday.electromapapp.view.commons.FragmentBase
 
-open class BaseMapFragment : Fragment() {
-
-}
+abstract class BaseMapFragment<BINDING : ViewDataBinding> : FragmentBase<BINDING>()

@@ -1,18 +1,12 @@
 package com.sunday.electromapapp.view.maps
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.PermissionChecker
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -31,7 +25,6 @@ import com.sunday.electromapapp.model.vo.Positioninfo
 import com.sunday.electromapapp.view.maps.adapters.NaverInfoWindowAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 
@@ -43,32 +36,29 @@ import kotlinx.coroutines.launch
  * 1. 마커 시간표시에 관한 문제 .
  * 2.
  */
-class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
-    private lateinit var binding: MapNaverFragmentBinding
+class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyCallback {
+
     private val vmPositions: PositionsViewModel by viewModels()
     private lateinit var naverMap: NaverMap
     private lateinit var naverinfoWindow: InfoWindow
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?,
-    ): View {
-        binding = MapNaverFragmentBinding.inflate(inflater, null, false)
-        binding.viewmodel = vmPositions
-        binding.lifecycleOwner = this.viewLifecycleOwner
+    private var isGpspermission = false
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getBinding.viewmodel = vmPositions
+        getBinding.lifecycleOwner = this.viewLifecycleOwner
+        isGpspermission = isCheck()
         setNaverMap()
         observers()
         init()
-        return binding.root
     }
-
     private fun init() {
-        tryEnableLocation()
-        binding.maptools.reFrashGps.setOnClickListener {
-            vmPositions.getLastGpsPosition()
+        getBinding.maptools.reFrashGps.setOnClickListener {
+            vmPositions.getLastGpsPosition(isGpspermission)
         }
-        binding.maptools.reFrashList.setOnClickListener {
+        getBinding.maptools.reFrashList.setOnClickListener {
+            getBinding.maptools.reFrashList.isEnabled = false
             naverMap.cameraPosition.let {
                 onNewPosition(it.target.latitude, it.target.longitude)
             }
@@ -86,7 +76,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
     }
 
-    val TAG = "Map"
+
     var mapMakers = arrayListOf<Marker>()
 
     /**
@@ -94,6 +84,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
      */
     private fun observers() {
         vmPositions.positions.observe(this.viewLifecycleOwner, {
+            getBinding.maptools.reFrashList.isEnabled = true
             mapMakers.forEach {
                 it.map = null
             }
@@ -124,13 +115,11 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
             when (it) {
                 null -> {
                     // 그냥 맵에서 가운데 좌표로 호출한다 .
-                    Toast.makeText(requireContext(), "권한 체크 필요 ?", Toast.LENGTH_LONG).show()
                     naverMap.cameraPosition.let {
-                        onNewPosition(it.target.latitude, it.target.latitude)
+                        onNewPosition(it.target.latitude, it.target.longitude)
                     }
                 }
                 else -> {
-                    Toast.makeText(requireContext(), "위치 확인", Toast.LENGTH_LONG).show()
                     onNewPosition(it.latitude, it.longitude)
                     naverMap.moveCamera(CameraUpdate.scrollTo(LatLng(it.latitude, it.longitude)))
                 }
@@ -142,7 +131,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
      * 지금위치의 충전소 목록 가져온다 .
      */
     fun onNewPosition(latitude: Double, longitude: Double) {
-        GlobalScope.launch(Dispatchers.IO)
+        lifecycleScope.launch(Dispatchers.IO)
         { vmPositions.getPosition(latitude, longitude) }
 
     }
@@ -163,7 +152,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
             }
         }
         naverinfoWindow = infoWindow
-        vmPositions.getLastGpsPosition()
+        vmPositions.getLastGpsPosition(isGpspermission)
         naverMap.setOnMapClickListener { pointF, latLng ->
             infoWindow.position = latLng
             infoWindow.close()
@@ -182,41 +171,10 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
     }
 
     private val LOCATION_REQUEST_INTERVAL = 1000
-    private val PERMISSION_REQUEST_CODE = 100
-    private val PERMISSIONS = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-    )
-
-    private fun tryEnableLocation() {
-
-        if (PERMISSIONS.all {
-                    ContextCompat.checkSelfPermission(
-                            requireContext(),
-                            it
-                    ) == PermissionChecker.PERMISSION_GRANTED
-                }) {
-            getLocationInit()
-        } else {
-            ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    PERMISSIONS,
-                    PERMISSION_REQUEST_CODE
-            )
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-    ) {
 
 
-        if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-            getLocationInit()
-        }
-    }
+
+
 
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -229,4 +187,7 @@ class FragmentMapNaver : BaseMapFragment(), OnMapReadyCallback {
             vmPositions._location.postValue(it)
         }
     }
+
+    override val layoutId: Int
+        get() = R.layout.map_naver_fragment
 }

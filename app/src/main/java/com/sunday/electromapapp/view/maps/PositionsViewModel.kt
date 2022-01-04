@@ -1,6 +1,7 @@
 package com.sunday.electromapapp.view.maps
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
@@ -34,8 +35,8 @@ class PositionsViewModel @Inject constructor(
 
 
     private val _positions: MutableLiveData<List<Positioninfo>> = MutableLiveData()
-    val _location: MutableLiveData<Location> = MutableLiveData()
-    val currlocatoin: LiveData<Location> = _location
+    val _location: MutableLiveData<Location?> = MutableLiveData()
+    val currlocatoin: LiveData<Location?> = _location
     var positions: LiveData<List<Positioninfo>> = _positions
     private val _isLoding = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoding
@@ -75,20 +76,15 @@ class PositionsViewModel @Inject constructor(
      * 위치 정보 가져오기
      * 처음시작시 위치 표시용
      */
-    fun getLastGpsPosition() {
-        if (ActivityCompat.checkSelfPermission(
-                getApplication(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(
-                getApplication(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+    @SuppressLint("MissingPermission")
+    fun getLastGpsPosition(isGpspermission: Boolean) {
+        Log.i(TAG , "getLastGpsPosition $isGpspermission")
+        if (isGpspermission) {
+            _location.postValue(location.getLastKnownLocation(LocationManager.GPS_PROVIDER))
+        }else{
             _location.postValue(null)
-            return
         }
-        _location.postValue(location.getLastKnownLocation(LocationManager.GPS_PROVIDER))
+
 
     }
 
