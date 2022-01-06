@@ -4,6 +4,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="reFrashList">목록 새로고침</string>
+    <string name="use_type_yes">가능</string>
+    <string name="use_type_no">불가능</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

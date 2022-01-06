@@ -31,7 +31,7 @@ data class Positioninfo(
     val providerCode: String,// 제공기관코드
     val providerName: String,// 제공기관코드
 
-)  : Parcelable{
+) : Parcelable {
     constructor(facilityName: String, latitude: Double, longitude: Double) : this(
         0,
         facilityName,
@@ -58,7 +58,6 @@ data class Positioninfo(
         "",
         ""
     )
-
 
 
     // 1. 지금 충전 가능 상태 확인
@@ -90,8 +89,7 @@ data class Positioninfo(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!
-    ) {
-    }
+    )
 
     /**
      * 지금 충전 가능한가 >
@@ -103,19 +101,30 @@ data class Positioninfo(
         when (nowDay.dayOfWeek.value) {
             in 1..5 -> {
                 return isWeek() && (weeklyTimeStart.isBefore(nowTime) &&
-                        weeklyTimeEnd.isAfter(nowTime))
-
+                        day24change(weeklyTimeEnd).isAfter(nowTime))
             }
             6 -> {
                 return isSaturday() && (weeklySetdayStart.isBefore(nowTime) &&
-                        weeklySetdayEnd.isAfter(nowTime))
+                        day24change(weeklySetdayEnd).isAfter(nowTime))
             }
             7 -> {
                 return isSunday() && (weeklySundayStart.isBefore(nowTime) &&
-                        weeklySundayEnd.isAfter(nowTime))
+                        day24change(weeklySundayEnd).isAfter(nowTime))
             }
         }
         return false
+    }
+
+    /**
+     * 끝나는 시간이 24시간이 아닌 12시간으로 했을때 변경 .
+     * 01:00 같은 수지
+     *
+     */
+    private fun day24change(endtime: LocalTime): LocalTime {
+        if (endtime.hour != 0 && endtime.hour <= 12) {
+            return LocalTime.of(endtime.hour + 12,0)
+        }
+        return endtime
     }
 
     fun isWeek(): Boolean =
