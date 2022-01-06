@@ -2,5 +2,5 @@
 <resources>
     <dimen name="custom_info_window_offset_x">-27dp</dimen>
     <dimen name="custom_info_window_offset_y">-9dp</dimen>
-
+    <dimen name="body1">18dp</dimen>
 </resources>

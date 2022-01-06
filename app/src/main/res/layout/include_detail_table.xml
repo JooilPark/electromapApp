@@ -16,14 +16,14 @@
         tools:context=".view.maps.PositionDetailFragment">
 
         <GridLayout
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"
-            android:padding="10dp">
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,216 +31,242 @@
                 android:padding="2dp"
                 android:paddingEnd="10dp"
                 android:text="시설명"
+                android:textSize="@dimen/body1"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.facilityName}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:text="시도명" />
+                android:text="시도명"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.cityName}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
-                android:text="시군구명" />
+                android:text="시군구명"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.countryName}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="시군구 코드" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.countryCode}"
-                tools:text="CONTENT" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="도로명주소" />
+                android:text="도로명주소"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.addressRoad}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="지번주소" />
+                android:text="지번주소"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.addressNumber}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="설치장소설명" />
+                android:text="설치장소설명"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.pleaceDescription}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="관리 기관명" />
+                android:text="관리 기관명"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.managerFacilityName}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="관리 기관 전화번호" />
+                android:text="관리 기관 전화번호"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.managerFacilityPhone}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="동시 충전 가능대수" />
+                android:text="동시 충전 가능대수"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(item.useNumber) + '대'}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="공기 주입기 사용가능" />
+                android:text="공기 주입기 사용가능"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.aircompresser ? @string/use_type_yes :  @string/use_type_no }"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="휴대 전화 충전가능" />
+                android:text="휴대 전화 충전가능"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.phoneChager ? @string/use_type_yes :  @string/use_type_no }"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="관리 기관명" />
+                android:text="관리 기관명"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.managerFacilityName}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="관리 기관 전화번호" />
+                android:text="관리 기관 전화번호"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.managerFacilityPhone}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="데이터 기준일자" />
+                android:text="데이터 기준일자"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.keyDay}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="제공기관코드" />
+
+ 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.providerCode +`/` + item.providerName }"
-                tools:text="CONTENT" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="평일 사용가능 시간" />
+                android:text="평일 사용가능 시간"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.weeklyTimeStart + `+` + item.weeklyTimeEnd}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="토요일 사용가능 시간" />
+                android:text="토요일 사용가능 시간"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.weeklySetdayStart + `+` + item.weeklySetdayEnd}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"
-                android:text="일요일 사용가능시간" />
+                android:text="일요일 사용가능시간"
+                android:textSize="@dimen/body1" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{item.weeklySundayEnd + `+` + item.weeklySetdayEnd}"
+                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
 
         </GridLayout>
