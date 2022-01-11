@@ -1,8 +1,11 @@
 package com.sunday.electromapapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
 import com.sunday.electromapapp.databinding.ActivityMapsBinding
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,18 +20,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-
+    private val TAG = "MapsActivity";
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_maps)
 
         MobileAds.initialize(this) {
+            it.adapterStatusMap.keys.forEach{ key->
+                Log.i(TAG , " key = ${it.adapterStatusMap[key]}")
+            }
+        }
 
+        binding.adView.apply {
+            loadAd(AdRequest.Builder().build())
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
     }
 
     /**

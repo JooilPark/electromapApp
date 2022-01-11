@@ -225,7 +225,7 @@
                 android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
 
- 
+
 
             <TextView
                 android:layout_width="wrap_content"
