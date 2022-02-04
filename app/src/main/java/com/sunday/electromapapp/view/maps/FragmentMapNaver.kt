@@ -83,7 +83,7 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
      * 옵저버들 설정
      */
     private fun observers() {
-        vmPositions.positions.observe(this.viewLifecycleOwner, {
+        vmPositions.positions.observe(this.viewLifecycleOwner) {
             getBinding.maptools.reFrashList.isEnabled = true
             mapMakers.forEach {
                 it.map = null
@@ -98,7 +98,7 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
                     position = LatLng(positioninfo.latitude, positioninfo.longitude)
                     angle = 0f
                     icon =
-                            if (positioninfo.isRechargeEnable()) MarkerIcons.GREEN else MarkerIcons.GRAY
+                        if (positioninfo.isRechargeEnable()) MarkerIcons.GREEN else MarkerIcons.GRAY
                     setOnClickListener {
                         naverinfoWindow.tag = positioninfo
                         naverinfoWindow.open(this, Align.Left)
@@ -110,8 +110,8 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
 
 
             }
-        })
-        vmPositions.currlocatoin.observe(this.viewLifecycleOwner, {
+        }
+        vmPositions.currlocatoin.observe(this.viewLifecycleOwner) {
             when (it) {
                 null -> {
                     // 그냥 맵에서 가운데 좌표로 호출한다 .
@@ -124,7 +124,7 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
                     naverMap.moveCamera(CameraUpdate.scrollTo(LatLng(it.latitude, it.longitude)))
                 }
             }
-        })
+        }
     }
 
     /**
