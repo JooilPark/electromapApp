@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,7 +17,7 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Align
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.util.MarkerIcons
+import com.naver.maps.map.overlay.OverlayImage
 import com.sunday.electromapapp.R
 import com.sunday.electromapapp.databinding.MapNaverFragmentBinding
 import com.sunday.electromapapp.model.vo.Positioninfo
@@ -53,6 +52,7 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
         observers()
         init()
     }
+
     private fun init() {
         getBinding.maptools.reFrashGps.setOnClickListener {
             vmPositions.getLastGpsPosition(isGpspermission)
@@ -70,9 +70,9 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
      */
     private fun setNaverMap() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
-                ?: MapFragment.newInstance().also {
-                    childFragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
-                }
+            ?: MapFragment.newInstance().also {
+                childFragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
+            }
         mapFragment.getMapAsync(this)
     }
 
@@ -97,8 +97,11 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
                 mapMakers.add(Marker().apply {
                     position = LatLng(positioninfo.latitude, positioninfo.longitude)
                     angle = 0f
+                    height = 51.dpTopx()
+                    width = 46.dpTopx()
                     icon =
-                        if (positioninfo.isRechargeEnable()) MarkerIcons.GREEN else MarkerIcons.GRAY
+                        if (positioninfo.isRechargeEnable()) OverlayImage.fromResource(R.drawable.icon_on) else
+                            OverlayImage.fromResource(R.drawable.icon_off)
                     setOnClickListener {
                         naverinfoWindow.tag = positioninfo
                         naverinfoWindow.open(this, Align.Left)
@@ -136,6 +139,11 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
 
     }
 
+    fun Int.dpTopx(): Int {
+        return (this * resources.displayMetrics.density).toInt()
+
+    }
+
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
@@ -147,7 +155,11 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
             setOnClickListener {
                 close()
                 Log.i(TAG, "${it.tag!!.javaClass.name}")
-                findNavController().navigate(FragmentMapNaverDirections.actionFragmentMapNaverToPositionDetailFragment(it.tag as Positioninfo))
+                findNavController().navigate(
+                    FragmentMapNaverDirections.actionFragmentMapNaverToPositionDetailFragment(
+                        it.tag as Positioninfo
+                    )
+                )
                 true
             }
         }
@@ -173,16 +185,12 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
     private val LOCATION_REQUEST_INTERVAL = 1000
 
 
-
-
-
-
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     @SuppressLint("MissingPermission")
     fun getLocationInit() {
         fusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(requireActivity())
+            LocationServices.getFusedLocationProviderClient(requireActivity())
         fusedLocationProviderClient.lastLocation.addOnSuccessListener {
             vmPositions._location.postValue(it)
         }

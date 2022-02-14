@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.sunday.electromapapp.model.vo.Positioninfo" />
@@ -13,163 +14,173 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="180dp"
-            android:layout_height="45dp"
-            android:background="@drawable/maker_back_round"
+        <androidx.cardview.widget.CardView
+            android:layout_width="221dp"
+            android:layout_height="112dp"
+            android:layout_margin="10dp"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            app:cardCornerRadius="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/iv_charge_onoff"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="5dp"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ischarge_status" />
-
-            <TextView
-                android:id="@+id/tv_location_name"
-                android:layout_width="140dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="2dp"
-                android:includeFontPadding="false"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:maxLines="1"
-                android:text="@{item.facilityName}"
-                android:textColor="@color/defaulttextcolor_FF"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="장애인 전동보장구 충전기(영춘면별방민원센터)" />
-
-            <TextView
-                android:id="@+id/tv_phone"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="8dp"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@{item.managerFacilityPhone}"
-                android:textColor="@color/defaulttextcolor_FF"
-                android:textSize="7sp"
-                app:layout_constraintStart_toStartOf="@id/tv_location_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_location_name"
-                tools:text="010-8265-2330"
+                android:layout_height="wrap_content"
 
-                />
+                android:layout_margin="6dp">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="110dp"
-                android:layout_height="13dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="2dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_phone">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <LinearLayout
+                    android:id="@+id/topTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start">
+                    android:layout_margin="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <include
-                        android:id="@+id/day1"
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isWeek}"
+                    <TextView
+                        android:id="@+id/tv_location_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:includeFontPadding="false"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:maxWidth="180dp"
+                        android:maxLines="1"
+
+                        android:text="@{item.facilityName}"
+                        android:textColor="@color/defaulttextcolor_FF"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:textDay="@{`월`}" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="장애인 전동보장구 충전기(영춘면별방민원센터)" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/icon_more"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_location_name"
+                        app:layout_constraintStart_toEndOf="@id/tv_location_name"
+                        app:layout_constraintTop_toTopOf="@id/tv_location_name" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/border"
+                    android:layout_width="205dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6dp"
+                    android:background="#DEDEDE"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/topTitle" />
+
+                <LinearLayout
+                    android:id="@+id/phoneGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start">
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="13dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/border">
 
-                    <include
-                        android:id="@+id/day2"
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isWeek}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:textDay="@{`화`}" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/icon_call" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                    <TextView
+                        android:id="@+id/tv_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{item.managerFacilityPhone}"
+                        android:textColor="#585858"
+                        tools:text="010-8265-2330" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start">
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="13dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/phoneGroup">
 
-                    <include
-                        android:id="@+id/day3"
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isWeek}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:textDay="@{`수`}" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/icon_calendar" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:dayindex="@{0}"
+                        app:srcday="@{item.week}"
+                        tools:src="@drawable/on_mon" />
 
-                    <include
-                        android:id="@+id/day4"
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isWeek}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:textDay="@{`목`}" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="3dp"
+                        app:dayindex="@{1}"
+                        app:srcday="@{item.week}"
+                        tools:src="@drawable/on_mon" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="3dp"
+                        app:dayindex="@{2}"
+                        app:srcday="@{item.week}"
+                        tools:src="@drawable/on_mon" />
 
-                    <include
-                        android:id="@+id/day5"
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isWeek}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:textDay="@{`금`}" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="3dp"
+                        app:dayindex="@{3}"
+                        app:srcday="@{item.week}"
+                        tools:src="@drawable/on_mon" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="3dp"
+                        app:dayindex="@{4}"
+                        app:srcday="@{item.week}"
+                        tools:src="@drawable/on_mon" />
 
-                    <include
-                        android:id="@+id/day6"
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isSaturday}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:textDay="@{`토`}" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="3dp"
+                        app:dayindex="@{5}"
+                        app:srcday="@{item.saturday}"
+                        tools:src="@drawable/on_mon" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="3dp"
+                        app:dayindex="@{6}"
+                        app:srcday="@{item.sunday}"
+                        tools:src="@drawable/on_mon" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <include
-                        android:id="@+id/day7"
-                        layout="@layout/view_maker_item_day"
-                        app:isWork="@{item.isSunday}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:textDay="@{`일`}" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
