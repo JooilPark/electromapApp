@@ -28,9 +28,16 @@ class PositionDetailFragment : Fragment() , OnMapReadyCallback {
     ): View? {
         binding = DataBindingUtil.inflate(inflater , R.layout.fragment_position_detail , container , false)
         binding.lifecycleOwner = this.viewLifecycleOwner
+
+
         binding.ditem = args.item
         setNaverMap()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
     /**
      * 지도 설정

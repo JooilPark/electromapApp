@@ -19,22 +19,29 @@
         <entry key="..\:/MyGit/spring/electromapApp/app/src/main/res/layout/map_naver.xml" value="0.18229166666666666" />
         <entry key="..\:/MyGit/spring/electromapApp/app/src/main/res/layout/map_naver_fragment.xml" value="0.34010416666666665" />
         <entry key="..\:/MyGit/spring/electromapApp/app/src/main/res/layout/view_maker_item_day.xml" value="0.34010416666666665" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/drawable-v24/detail_text_selectes.xml" value="0.197" />
         <entry key="..\:/git/electromapApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.17039473684210527" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/drawable/detail_fragment_back.xml" value="0.156" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/drawable/detail_on_off_status_orb.xml" value="0.16776315789473684" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/drawable/detail_subtitle_back_rect_round.xml" value="0.146" />
         <entry key="..\:/git/electromapApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17039473684210527" />
         <entry key="..\:/git/electromapApp/app/src/main/res/drawable/ischange_off.xml" value="0.17039473684210527" />
         <entry key="..\:/git/electromapApp/app/src/main/res/drawable/ischange_on.xml" value="0.17039473684210527" />
         <entry key="..\:/git/electromapApp/app/src/main/res/drawable/ischarge_on.xml" value="0.17039473684210527" />
         <entry key="..\:/git/electromapApp/app/src/main/res/drawable/ischarge_status.xml" value="0.17039473684210527" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/drawable/main_map_gps_back.xml" value="0.21776018099547512" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/drawable/main_map_refrash.xml" value="0.16776315789473684" />
         <entry key="..\:/git/electromapApp/app/src/main/res/drawable/maker_back_day_activity.xml" value="0.26979166666666665" />
         <entry key="..\:/git/electromapApp/app/src/main/res/drawable/maker_back_round.xml" value="0.26979166666666665" />
         <entry key="..\:/git/electromapApp/app/src/main/res/layout/activity_maps.xml" value="0.15756578947368421" />
         <entry key="..\:/git/electromapApp/app/src/main/res/layout/fragment_intro.xml" value="0.15756578947368421" />
-        <entry key="..\:/git/electromapApp/app/src/main/res/layout/fragment_position_detail.xml" value="0.1" />
-        <entry key="..\:/git/electromapApp/app/src/main/res/layout/include_map_tools.xml" value="0.16019736842105264" />
-        <entry key="..\:/git/electromapApp/app/src/main/res/layout/item_map_maker.xml" value="0.7270408163265306" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/fragment_position_detail.xml" value="0.17966991747936983" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/include_detail_table.xml" value="0.17966991747936983" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/include_map_tools.xml" value="0.3526927138331573" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/item_map_maker.xml" value="0.72" />
         <entry key="..\:/git/electromapApp/app/src/main/res/layout/map_maker.xml" value="0.72" />
         <entry key="..\:/git/electromapApp/app/src/main/res/layout/map_naver.xml" value="0.25364583333333335" />
-        <entry key="..\:/git/electromapApp/app/src/main/res/layout/map_naver_fragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/git/electromapApp/app/src/main/res/layout/map_naver_fragment.xml" value="0.2" />
         <entry key="..\:/git/electromapApp/app/src/main/res/layout/view_maker_item_day.xml" value="1.6" />
       </map>
     </option>

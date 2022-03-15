@@ -24,7 +24,7 @@ data class Positioninfo(
     val weeklySundayEnd: LocalTime, // 일요일 운영 종료
     val useNumber: Int = 0,// 동시 충전 가능대수
     val aircompresser: Boolean = false,// 공기 주입기 사용가능
-    val phoneChager: Boolean = false, // 휴대 전화 충전가능
+    var phoneChager: Boolean = false, // 휴대 전화 충전가능
     val managerFacilityName: String, // 관리 기관명
     val managerFacilityPhone: String, // 관리 기관 전화번호
     val keyDay: String, // 데이터 기준일자
