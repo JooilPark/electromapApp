@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,266 +11,322 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:context=".view.maps.PositionDetailFragment">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:background="@drawable/detail_fragment_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:text="@{item.facilityName}"
+            android:textColor="@color/defaulttextcolor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="전동휠체어 급속 충전기" />
+
+        <View
+            android:id="@+id/top_border"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="47dp"
+            android:layout_marginEnd="20dp"
+            android:background="#DEDEDE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@null"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_close"
+            app:layout_constraintBottom_toBottomOf="@id/top_border"
+            app:layout_constraintEnd_toEndOf="@id/top_border"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/setAir"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="45dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:background="@drawable/detail_on_off_status_orb"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
+            android:textColor="@color/DetailTextColorGray"
+            android:textSize="12sp"
+            tools:text="가능"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@{item.aircompresser ? @string/use_type_yes :  @string/use_type_no }"
+            app:layout_constraintTop_toBottomOf="@id/top_border"
+            app:isTextViewSelected="@{item.aircompresser}"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="#C4C4C4"
+
+            app:layout_constraintBottom_toBottomOf="@id/setAir"
+            app:layout_constraintEnd_toStartOf="@id/setPhoneCharge"
+            app:layout_constraintStart_toEndOf="@id/setAir"
+            app:layout_constraintTop_toTopOf="@id/setAir" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="#C4C4C4"
+            app:layout_constraintBottom_toBottomOf="@id/setAir"
+            app:layout_constraintEnd_toStartOf="@id/setPhoneCharge"
+            app:layout_constraintStart_toEndOf="@id/setAir"
+            app:layout_constraintTop_toTopOf="@id/setAir" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/setPhoneCharge"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="68dp"
+            android:background="@drawable/detail_on_off_status_orb"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@{item.phoneChager ? @string/use_type_yes :  @string/use_type_no }"
+            android:textAlignment="center"
+            android:textColor="@color/DetailTextColorGray"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:isTextViewSelected="@{item.phoneChager}"
+            app:layout_constraintBottom_toBottomOf="@id/setAir"
+            app:layout_constraintStart_toEndOf="@id/setAir"
+            app:layout_constraintTop_toTopOf="@id/setAir"
+            tools:text="가능" />
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="22dp"
+            android:background="#C4C4C4"
+            app:layout_constraintBottom_toBottomOf="@id/setAir"
+            app:layout_constraintEnd_toEndOf="@id/setAir"
+            app:layout_constraintStart_toStartOf="@id/setDualCharge"
+            app:layout_constraintTop_toTopOf="@id/setAir" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/setDualCharge"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="68dp"
+            android:background="@drawable/detail_on_off_status_orb"
+            android:gravity="center"
+            android:text="@{@string/phone_chager_Number(String.valueOf(item.useNumber))}"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:isTextViewSelected="@{item.useNumber > 0 ? true : false}"
+            app:layout_constraintBottom_toBottomOf="@id/setAir"
+            app:layout_constraintEnd_toStartOf="@id/setAir"
+            app:layout_constraintTop_toTopOf="@id/setAir"
+            tools:text="1대" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="동시 충전"
+            android:textColor="#262626"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/setAir"
+            app:layout_constraintEnd_toEndOf="@id/setDualCharge"
+            app:layout_constraintStart_toStartOf="@id/setDualCharge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="공기 주입기"
+            android:textColor="#262626"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/setAir"
+            app:layout_constraintEnd_toEndOf="@id/setAir"
+            app:layout_constraintStart_toStartOf="@id/setAir" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="휴대 전화 충전"
+            android:textColor="#262626"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/setAir"
+            app:layout_constraintEnd_toEndOf="@id/setPhoneCharge"
+            app:layout_constraintStart_toStartOf="@id/setPhoneCharge" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/addressSub"
+            android:layout_width="43dp"
+            android:textColor="#7B7B7B"
+            android:layout_height="27dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="153dp"
+            android:background="@drawable/detail_subtitle_back_rect_round"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="주소"
+            android:textSize="11dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:columnCount="2"
-            android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:paddingEnd="10dp"
-                android:text="시설명"
-                android:textSize="@dimen/body1"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.facilityName}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="시도명"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.cityName}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="시군구명"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.countryName}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="도로명주소"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="@id/addressSub"
+            app:layout_constraintTop_toBottomOf="@id/addressSub">
+            <!-- 도로명주소 -->
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Head"
+                android:text="도로명주소" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Body"
                 android:text="@{item.addressRoad}"
-                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="지번주소"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Head"
+                android:text="지번주소" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Body"
                 android:text="@{item.addressNumber}"
-                android:textSize="@dimen/body1"
                 tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="설치장소설명"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.pleaceDescription}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="관리 기관명"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.managerFacilityName}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="관리 기관 전화번호"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.managerFacilityPhone}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="동시 충전 가능대수"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{String.valueOf(item.useNumber) + '대'}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="공기 주입기 사용가능"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.aircompresser ? @string/use_type_yes :  @string/use_type_no }"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="휴대 전화 충전가능"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.phoneChager ? @string/use_type_yes :  @string/use_type_no }"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="관리 기관명"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.managerFacilityName}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="관리 기관 전화번호"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.managerFacilityPhone}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="데이터 기준일자"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.keyDay}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="평일 사용가능 시간"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.weeklyTimeStart + `+` + item.weeklyTimeEnd}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="토요일 사용가능 시간"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.weeklySetdayStart + `+` + item.weeklySetdayEnd}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="10dp"
-                android:text="일요일 사용가능시간"
-                android:textSize="@dimen/body1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{item.weeklySundayEnd + `+` + item.weeklySetdayEnd}"
-                android:textSize="@dimen/body1"
-                tools:text="CONTENT" />
-
         </GridLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="248dp"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp"
+            android:background="@drawable/detail_subtitle_back_rect_round"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:textColor="#7B7B7B"
+            android:text="관리기관"
+            android:textSize="11dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:columnCount="2"
+            android:layout_marginTop="101dp"
+            app:layout_constraintStart_toStartOf="@id/addressSub"
+            app:layout_constraintTop_toBottomOf="@id/addressSub">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Head"
+                android:text="설치장소 설명" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Body"
+                android:maxWidth="200dp"
+                android:text="@{item.pleaceDescription}"
+                tools:text="CONTENT" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Head"
+                android:text="관리기관명" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Body"
+                android:layout_width="wrap_content"
+                android:text="@{item.managerFacilityName}"
+                tools:text="CONTENT" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Head"
+                android:text="전화번호" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Body"
+                android:layout_width="wrap_content"
+                android:text="@{item.managerFacilityPhone}"
+                tools:text="CONTENT" />
+        </GridLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="366dp"
+            android:paddingStart="11dp"
+            android:paddingEnd="11dp"
+            android:background="@drawable/detail_subtitle_back_rect_round"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="사용가능시간"
+            android:textSize="11dp"
+            android:textColor="#7B7B7B"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:columnCount="2"
+            android:layout_marginTop="219dp"
+            app:layout_constraintStart_toStartOf="@id/addressSub"
+            app:layout_constraintTop_toBottomOf="@id/addressSub">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Head"
+                android:text="평   일" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Body"
+                android:maxWidth="200dp"
+                android:text="@{@string/start_end_time(item.weeklyTimeStart, item.weeklyTimeEnd)}"
+                tools:text="r" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Head"
+                android:text="토요일" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Body"
+                android:layout_width="wrap_content"
+                android:text="@{@string/start_end_time(item.weeklySetdayStart, item.weeklySetdayEnd)}"
+                tools:text="CONTENT" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Head"
+                android:text="일요일"
+                android:layout_marginBottom="20dp"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Detail_item_Body"
+                android:layout_width="wrap_content"
+                android:text="@{@string/start_end_time(item.weeklySundayEnd, item.weeklySetdayEnd)}"
+                tools:text="CONTENT" />
+        </GridLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

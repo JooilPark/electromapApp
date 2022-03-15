@@ -6,7 +6,6 @@
         <variable
             name="ditem"
             type="com.sunday.electromapapp.model.vo.Positioninfo" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,33 +14,36 @@
         android:layout_height="match_parent"
         tools:context=".view.maps.PositionDetailFragment">
 
-        <ScrollView
-            android:id="@+id/scrollDetail"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="400dp"
-
+            android:layout_height="match_parent"
+            android:layout_marginBottom="440dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/scrollDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <fragment
+                android:id="@+id/map_fragment"
+                android:name="com.naver.maps.map.MapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <include
-                    layout="@layout/include_detail_table"
-                    app:item="@{ditem}" />
-            </LinearLayout>
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/scrollDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-        </ScrollView>
-        <fragment
-            android:id="@+id/map_fragment"
-            android:name="com.naver.maps.map.MapFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/scrollDetail"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:visibility="gone" />
+            <include
+                android:id="@+id/detail"
+                layout="@layout/include_detail_table"
+                app:item="@{ditem}" />
+        </LinearLayout>
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

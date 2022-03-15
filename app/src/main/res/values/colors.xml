@@ -10,6 +10,10 @@
     <color name="makerborder">#8C8888</color>
     <color name="maker_day">#219653</color>
     <color name="defaulttextcolor_FF">#262626</color>
-
+    <color name="defaulttextcolor">#262626</color>
     <color name="primaryColor">#007AFF</color>
+    <color name="DetailTextColorGray">#777575</color>
+    <color name="DetailTextColorWhite">#FFFFFF</color>
+
+
 </resources>
