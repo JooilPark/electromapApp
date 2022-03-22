@@ -41,7 +41,7 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
     private lateinit var naverMap: NaverMap
     private lateinit var naverinfoWindow: InfoWindow
     private var isGpspermission = false
-
+    private var positions: List<Positioninfo> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,11 +55,13 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
 
     private fun init() {
         getBinding.maptools.reFrashGps.setOnClickListener {
+            positions = arrayListOf()
             vmPositions.getLastGpsPosition(isGpspermission)
         }
         getBinding.maptools.reFrashList.setOnClickListener {
             getBinding.maptools.reFrashList.isEnabled = false
             naverMap.cameraPosition.let {
+                Log.i(TAG, "INI")
                 onNewPosition(it.target.latitude, it.target.longitude)
             }
         }
@@ -78,64 +80,82 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
 
 
     var mapMakers = arrayListOf<Marker>()
+    fun reFrashList(positions: List<Positioninfo>) {
+        getBinding.maptools.reFrashList.isEnabled = true
+        mapMakers.forEach {
+            it.map = null
+        }
 
+        Log.i(TAG, "크기 ${mapMakers.size}")
+        mapMakers.clear()
+        positions.forEach { positioninfo ->
+            mapMakers.add(Marker().apply {
+                position = LatLng(positioninfo.latitude, positioninfo.longitude)
+                angle = 0f
+                height = 51.dpTopx()
+                width = 46.dpTopx()
+                icon =
+                    if (positioninfo.isRechargeEnable()) OverlayImage.fromResource(R.drawable.icon_on) else
+                        OverlayImage.fromResource(R.drawable.icon_off)
+                setOnClickListener {
+                    naverinfoWindow.tag = positioninfo
+                    naverinfoWindow.open(this, Align.Left)
+                    true
+                }
+                tag = positioninfo
+                map = naverMap
+            })
+
+
+        }
+    }
     /**
      * 옵저버들 설정
      */
     private fun observers() {
         vmPositions.positions.observe(this.viewLifecycleOwner) {
-            getBinding.maptools.reFrashList.isEnabled = true
-            mapMakers.forEach {
-                it.map = null
-            }
-
-            Log.i(TAG, "크기 ${mapMakers.size}")
-            mapMakers.clear()
-            it.forEach { positioninfo ->
-
-
-                mapMakers.add(Marker().apply {
-                    position = LatLng(positioninfo.latitude, positioninfo.longitude)
-                    angle = 0f
-                    height = 51.dpTopx()
-                    width = 46.dpTopx()
-                    icon =
-                        if (positioninfo.isRechargeEnable()) OverlayImage.fromResource(R.drawable.icon_on) else
-                            OverlayImage.fromResource(R.drawable.icon_off)
-                    setOnClickListener {
-                        naverinfoWindow.tag = positioninfo
-                        naverinfoWindow.open(this, Align.Left)
-                        true
-                    }
-                    tag = positioninfo
-                    map = naverMap
-                })
-
-
-            }
+            positions = it
+            reFrashList(positions)
         }
         vmPositions.currlocatoin.observe(this.viewLifecycleOwner) {
-            when (it) {
-                null -> {
-                    // 그냥 맵에서 가운데 좌표로 호출한다 .
-                    naverMap.cameraPosition.let {
-                        onNewPosition(it.target.latitude, it.target.longitude)
+            if (positions.size == 0) {
+
+                when (it) {
+                    null -> {
+                        // 그냥 맵에서 가운데 좌표로 호출한다 .
+                        naverMap.cameraPosition.let {
+                            Log.i(TAG, "currlocatoin = null")
+                            onNewPosition(it.target.latitude, it.target.longitude)
+                        }
+                    }
+                    else -> {
+                        Log.i(TAG, "currlocatoin = ok")
+                        onNewPosition(it.latitude, it.longitude)
+                        naverMap.moveCamera(
+                            CameraUpdate.scrollTo(
+                                LatLng(
+                                    it.latitude,
+                                    it.longitude
+                                )
+                            )
+                        )
                     }
                 }
-                else -> {
-                    onNewPosition(it.latitude, it.longitude)
-                    naverMap.moveCamera(CameraUpdate.scrollTo(LatLng(it.latitude, it.longitude)))
-                }
             }
+
         }
     }
 
     /**
      * 지금위치의 충전소 목록 가져온다 .
      */
-    fun onNewPosition(latitude: Double, longitude: Double) {
+    private fun onNewPosition(latitude: Double, longitude: Double) {
+        Log.i(TAG, "onNewPosition")
         lifecycleScope.launch(Dispatchers.IO)
-        { vmPositions.getPosition(latitude, longitude) }
+        {
+            Log.i(TAG, "onNewPosition2 ${positions.size}")
+            vmPositions.getPosition(latitude, longitude)
+        }
 
     }
 
@@ -146,7 +166,7 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
-
+        Log.i(TAG, "onMapReady")
 
         val infoWindow = InfoWindow().apply {
             offsetX = resources.getDimensionPixelSize(R.dimen.custom_info_window_offset_x)
@@ -169,7 +189,9 @@ class FragmentMapNaver : BaseMapFragment<MapNaverFragmentBinding>(), OnMapReadyC
             infoWindow.position = latLng
             infoWindow.close()
         }
-
+        if(positions.isNotEmpty()){
+            reFrashList(positions)
+        }
 
     }
 

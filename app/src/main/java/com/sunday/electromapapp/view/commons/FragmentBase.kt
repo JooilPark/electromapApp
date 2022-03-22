@@ -17,7 +17,7 @@ abstract class FragmentBase<BINDING : ViewDataBinding> : Fragment() {
     protected val getBinding
         get() = binding!!
     protected abstract val layoutId: Int
-    protected val TAG = this.javaClass.canonicalName
+    protected val TAG = this.javaClass.simpleName
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

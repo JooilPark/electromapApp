@@ -59,4 +59,5 @@ class PositionDetailFragment : Fragment() , OnMapReadyCallback {
             map = naverMap
         }
     }
+
 }

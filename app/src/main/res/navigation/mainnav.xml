@@ -30,7 +30,9 @@
         android:label="FragmentMapNaver" >
         <action
             android:id="@+id/action_fragmentMapNaver_to_positionDetailFragment"
-            app:destination="@id/positionDetailFragment" >
+            app:destination="@id/positionDetailFragment"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false">
 
         </action>
     </fragment>

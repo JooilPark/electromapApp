@@ -66,4 +66,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+
+
 }
