@@ -5,7 +5,7 @@
 
         <variable
             name="ditem"
-            type="com.sunday.electromapapp.model.vo.Positioninfo" />
+            type="com.sunday.electromapapp2.model.vo.Positioninfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

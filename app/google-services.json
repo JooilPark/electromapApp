@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:445114978527:android:505d62e64db9696ca1196a",
+        "mobilesdk_app_id": "1:445114978527:android:e38e733f072616c0a1196a",
         "android_client_info": {
-          "package_name": "com.sunday.electromapapp"
+          "package_name": "com.sunday.electromapapp2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "445114978527-ua0i5td6tqptic8qo8ft7eo0j959aus8.apps.googleusercontent.com",
+          "client_id": "445114978527-kr5c2u2mgivif7ha89no77vj3opu516h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.sunday.electromapapp",
+            "package_name": "com.sunday.electromapapp2",
             "certificate_hash": "e3d64c0160530b9c209b721171113fa0306a5bf3"
           }
         },

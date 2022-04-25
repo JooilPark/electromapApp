@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.sunday.electromapapp.view.maps.PositionsViewModel" />
+            type="com.sunday.electromapapp2.view.maps.PositionsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

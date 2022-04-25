@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/introFragment"
-        android:name="com.sunday.electromapapp.IntroFragment"
+        android:name="com.sunday.electromapapp2.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentMapNaver"
-        android:name="com.sunday.electromapapp.view.maps.FragmentMapNaver"
+        android:name="com.sunday.electromapapp2.view.maps.FragmentMapNaver"
         android:label="FragmentMapNaver" >
         <action
             android:id="@+id/action_fragmentMapNaver_to_positionDetailFragment"
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentMapKakao"
-        android:name="com.sunday.electromapapp.view.maps.FragmentMapKakao"
+        android:name="com.sunday.electromapapp2.view.maps.FragmentMapKakao"
         android:label="FragmentMapKakao" >
         <action
             android:id="@+id/action_fragmentMapKakao_to_positionDetailFragment"
@@ -46,12 +46,12 @@
     </fragment>
     <fragment
         android:id="@+id/positionDetailFragment"
-        android:name="com.sunday.electromapapp.view.maps.PositionDetailFragment"
+        android:name="com.sunday.electromapapp2.view.maps.PositionDetailFragment"
         android:label="fragment_position_detail"
         tools:layout="@layout/fragment_position_detail" >
 
         <argument
             android:name="item"
-            app:argType="com.sunday.electromapapp.model.vo.Positioninfo" />
+            app:argType="com.sunday.electromapapp2.model.vo.Positioninfo" />
     </fragment>
 </navigation>

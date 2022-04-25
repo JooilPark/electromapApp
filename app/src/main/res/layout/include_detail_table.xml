@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="com.sunday.electromapapp.model.vo.Positioninfo" />
+            type="com.sunday.electromapapp2.model.vo.Positioninfo" />
 
     </data>
 
